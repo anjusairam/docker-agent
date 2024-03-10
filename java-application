@@ -1,1 +1,33 @@
-java-hello-world-appln
+pipeline {
+    agent {
+        docker {
+            // Use the official OpenJDK image with tag 11
+            image 'openjdk:11'
+            // Define additional Docker parameters if needed
+            args '-v /your/local/path:/container/mounted/path' // Example volume mount
+        }
+    }
+    stages {
+        stage('Build') {
+            steps {
+                // Checkout your source code from version control
+                git 'https://github.com/your/repo.git'
+                // Compile the Java code
+                sh 'javac HelloWorld.java'
+            }
+        }
+        stage('Test') {
+            steps {
+                // Run unit tests or any other tests
+                // If you have test commands, you can add them here
+            }
+        }
+        stage('Deploy') {
+            steps {
+                // Run the Java application
+                sh 'java HelloWorld'
+            }
+        }
+    }
+}
+
